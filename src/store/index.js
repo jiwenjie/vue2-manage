@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import {getAdminInfo} from '@/api/getData'
+import {
+  getAdminInfo
+} from '@/api/getData'
 
 Vue.use(Vuex)
 
@@ -21,14 +23,14 @@ const actions = {
     commit
   }) {
     try {
-      // const res = await getAdminInfo()
-      // if (res.status == 1) {
-      // 	commit('saveAdminInfo', res.data);
-      // }else{
-      // 	throw new Error(res.type)
-      // }
+      const res = await getAdminInfo()
+      if (res.status == 1) {
+        commit('saveAdminInfo', res.data);
+      } else {
+        throw new Error(res.type)
+      }
     } catch (err) {
-      // console.log(err.message)
+      console.log(err.message)
     }
   }
 }
