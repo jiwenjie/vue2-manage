@@ -13,6 +13,7 @@ html {
   font-size: 62.5%;
   font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif, "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1";
   background: #f8f7f7;
+  height: 100%;
 }
 body,
 dl,
@@ -35,6 +36,9 @@ ul {
 body,
 form {
   position: relative;
+}
+body {
+  height: 100%;
 }
 em,
 i {
@@ -182,6 +186,15 @@ pre.wordwrap {
 td {
   text-align: left;
 }
+.reset-fonts {
+  font-size: 0;
+}
+.match-width {
+  width: 100%;
+}
+.match-height {
+  height: 100%;
+}
 /* 弹性布局兼容性处理 */
 /* 水平布局，禁止换行 */
 .row-flex-nowrap {
@@ -314,7 +327,4 @@ input[type="reset"] {
 }
 textarea {
   -webkit-appearance: none;
-}
-.reset-font-size {
-  font-size: 0;
 }
