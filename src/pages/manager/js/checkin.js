@@ -3,99 +3,145 @@ import {
 } from "@/api/getData"
 
 import {
-  mapActions,
-  mapState
-} from "vuex"
+  showLoading,
+  hideLoading
+} from '../../utils/commonUtil'
 
 export default {
   data() {
     return {
-      loginForm: {
-        username: "",
-        password: "",
+      formMobj: {
+        name: '',
+        sex: '01',
+        age: '',
+        roomTye: '01',
+        roomNum: '', // 房间号码
+        roomId: '', // 房间id
+        price: '',
+        days: '',
+        totalPrice: '', // 房间总金额
       },
       rules: {
-        username: [{
+        name: [{
           required: true,
-          message: "请输入用户名",
+          message: "请输入名称",
           trigger: "blur"
         }, ],
-        password: [{
+        sex: [{
           required: true,
-          message: "请输入密码",
+          message: "请选择性别",
+          trigger: "blur"
+        }],
+        age: [{
+          required: true,
+          message: "请输入年龄",
+          trigger: "blur"
+        }],
+        roomNum: [{
+          required: true,
+          message: "请选择房间",
+          trigger: "blur"
+        }],
+        days: [{
+          required: true,
+          message: "请输入天数",
           trigger: "blur"
         }],
       },
-      showLogin: false,
+      sexList: [{
+          value: '01',
+          label: '男'
+        },
+        {
+          value: '02',
+          label: '女'
+        }
+      ],
+      roomTypList: [{
+          value: "01",
+          label: "单人间",
+        },
+        {
+          value: "02",
+          label: "双人间",
+        },
+        {
+          value: "03",
+          label: "普通套房",
+        },
+        {
+          value: "04",
+          label: "豪华套房",
+        },
+        {
+          value: "05",
+          label: "总统套房",
+        },
+      ],
+      formLabelWidth: "100px",
+
+      // 用户选择房间弹出框
+      dialogShow: false,
     }
   },
   mounted() {
-    this.showLogin = true
-    if (!this.adminInfo.id) {
-      this.getAdminData()
-    }
+
   },
-  computed: {
-    // adminInfo() {
-    //   return this.$store.state.adminInfo;
-    // },
-    ...mapState(["adminInfo"]), // 语法糖，正常写法如上
-  },
+
   methods: {
-    /** 用来同步更新 mutations时使用的语法糖 **/
-    // ...mapMutations([
-    //   'increment', // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
-
-    //   // `mapMutations` 也支持载荷：
-    //   'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
-    // ]),
-
-    // getAdminData() {
-    //   this.$store.dispatch('getAdminData', this);
-    // },
-    /** 改种写法不会把 this 传递过去，如果想传递参数则使用上方写法 **/
-    ...mapActions(["getAdminData"]), // // 将 `this.getAdminData()` 映射为 `this.$store.dispatch('getAdminData')`
-
-    async submitForm(formName) {
-      // this.$refs[formName].validate(async (valid) => {
-      //   if (valid) {
-      //     const res = await login({
-      //       user_name: this.loginForm.username,
-      //       password: this.loginForm.password,
-      //     })
-      //     if (res.status == 1) {
-      //       this.$message({
-      //         type: "success",
-      //         message: "登录成功",
-      //       })
-      //       this.$router.push("manager");
-      //     } else {
-      //       this.$message({
-      //         type: "error",
-      //         message: res.message,
-      //       })
-      //     }
-      //   } else {
-      //     this.$notify.error({
-      //       title: "错误",
-      //       message: "请输入正确的用户名密码",
-      //       offset: 100,
-      //     })
-      //     return false
-      //   }
-      // })
-      this.$router.push("manager");
+    // 用户点击出现选择弹出框
+    selectRoom() {
+      this.dialogShow = true;
     },
-  },
-  watch: {
-    adminInfo: function (newValue) {
-      if (newValue.id) {
-        this.$message({
-          type: "success",
-          message: "检测到您之前登录过，将自动登录",
-        })
-        this.$router.push("manager");
+
+    // 用户点击确认的回掉
+    selectConfirm(data) {
+      this.formMobj.price = data.dayPrice;
+      this.formMobj.roomNum = data.roomNum;
+    },
+
+    // 点击弹出框回掉显示隐藏方法
+    selectRoomChange(val) {
+      this.dialogShow = val;
+    },
+
+    // 确认入住
+    confirmCheckIn() {
+      this.$refs['MObjForm'].validate(async (valid) => {
+        if (valid) {
+          // 该处调用接口，入住成功后生成一笔订单
+          showLoading();
+
+          setTimeout(() => {
+            this.$message({
+              message: "登记成功!",
+              type: "success",
+            })
+            hideLoading();
+          }, 800)
+        } else {
+          this.$notify.error({
+            title: "错误",
+            message: "请把信息补充完整",
+            offset: 100,
+          })
+          return false
+        }
+      })
+    },
+
+    // 重置数据
+    resetData() {
+      this.$refs['MObjForm'].resetFields();
+    },
+
+    // 改变输入的天数计算总金额
+    changeInputDay(value) {
+      if (!value) {
+        this.formMobj.totalPrice = '';
+      } else {
+        this.formMobj.totalPrice = Number.parseFloat(this.formMobj.price * this.formMobj.days).toFixed(2);
       }
-    },
-  },
+    }
+  }
 }

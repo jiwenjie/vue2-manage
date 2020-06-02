@@ -11,7 +11,7 @@
           :default-active="defaultActive"
           router
         >
-          <el-menu-item index="manage">
+          <el-menu-item index="manager">
             <i class="el-icon-menu"></i>
             <span>首页</span>
           </el-menu-item>
@@ -26,19 +26,22 @@
             <el-menu-item index="orderList">
               <span>订单列表</span>
             </el-menu-item>
-            <el-menu-item index="adminList">
+            <!-- <el-menu-item index="adminList">
               <span>管理员列表</span>
-            </el-menu-item>
+            </el-menu-item> -->
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-plus"></i>
               <span>添加数据</span>
             </template>
+            <el-menu-item index="addRoom">
+              <span>添加房间</span>
+            </el-menu-item>
             <el-menu-item index="checkin">
               <span>入住</span>
             </el-menu-item>
-            <el-menu-item index="out">
+            <el-menu-item index="checkout">
               <span>退房</span>
             </el-menu-item>
           </el-submenu>
@@ -47,14 +50,14 @@
               <i class="el-icon-star-on"></i>
               <span>图表</span>
             </template>
-            <el-menu-item index="sexvisitor">
-              <span>性别统计</span>
+            <el-menu-item index="timeChart">
+              <span>时间统计</span>
             </el-menu-item>
-            <el-menu-item index="visitor">
+            <el-menu-item index="inComeChart">
               <span>收入统计</span>
             </el-menu-item>
           </el-submenu>
-          <el-submenu index="5">
+          <!-- <el-submenu index="5">
             <template slot="title">
               <i class="el-icon-edit"></i>
               <span>编辑</span>
@@ -62,14 +65,15 @@
             <el-menu-item index="vueEdit">
               <span>文本编辑</span>
             </el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
           <el-submenu index="6">
             <template slot="title">
               <i class="el-icon-setting"></i>
               <span>设置</span>
             </template>
-            <el-menu-item index="adminSet">
-              <span>管理员设置</span>
+            <el-menu-item index="personSetting">
+              <!-- 人员设置，展示人员列表，展示信息和修改密码，权限等操作 -->
+              <span>人员设置</span>
             </el-menu-item>
           </el-submenu>
           <el-submenu index="7">
