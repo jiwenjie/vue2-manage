@@ -36,6 +36,8 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
       })
     }
 
+    console.log('tag-request', requestConfig)
+
     try {
       const response = await fetch(url, requestConfig);
       const responseJson = await response.json();

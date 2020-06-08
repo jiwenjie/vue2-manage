@@ -16,6 +16,10 @@ export default {
       currentPage: 1,
       limit: 10,
       totalCount: 0,
+
+      showDialog: false,
+      orderId: "",
+      detail: false, // 传入dialog子组件中，标识当前是编辑状态还是详情状态
     }
   },
   mounted() {
@@ -48,19 +52,33 @@ export default {
       this.getInitData();
     },
 
-    // 点击添加订单
+    // 点击添加订单,跳转到登记入住界面
     addClick() {
-      this.dialogShow = true;
+      this.$router.push("/checkin")
     },
 
     // 行查看，点击查看详情
     viewRow(row) {
-      console.log('tag-row', row);
+      this.showDialog = true;
+      this.orderId = row.id;
+      this.detail = true;
     },
 
     // 行编辑，点击打开弹窗
     editRow(row) {
-      console.log('tag--', row);
+      this.showDialog = true;
+      this.orderId = row.id;
+      this.detail = false;
+    },
+
+    // 弹出框确认方法的回掉
+    dialogConfirm(data) {
+      console.log('tag-confirm', data)
+    },
+
+    // 当用户点击显示隐藏 dialog 的时候调用父组件方法同步更新
+    dialogShow(val) {
+      this.showDialog = val;
     },
 
     // 某个字段如果空设置默认值

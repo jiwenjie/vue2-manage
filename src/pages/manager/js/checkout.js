@@ -16,6 +16,10 @@ export default {
       currentPage: 1,
       limit: 10,
       totalCount: 0,
+
+      // 点击弹出框相关
+      showDialog: false,
+      pkValue: '', // 数据主键
     }
   },
   mounted() {
@@ -52,11 +56,15 @@ export default {
 
     // 行查看，点击查看详情
     viewRow(row) {
+      this.showDialog = true;
+      this.pkValue = row.id;
       console.log('tag-row', row);
     },
 
     // 行编辑，点击打开弹窗
     editRow(row) {
+      this.showDialog = true;
+      this.pkValue = row.id;
       console.log('tag--', row);
     },
 
@@ -86,5 +94,15 @@ export default {
       this.currentPage = val;
       this.getInitData();
     },
+
+    // 弹出框确认信息的回掉
+    dialogConfirm(data) {
+      console.log('tag--confirm', data)
+    },
+
+    // dialog 显示隐藏的变化事件
+    dialogChangeView(val) {
+      this.showDialog = val;
+    }
   },
 }

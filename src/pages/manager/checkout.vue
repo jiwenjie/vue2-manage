@@ -93,16 +93,23 @@
         </el-pagination>
       </div>
     </div>
+    <hourMsgDialog
+      :showDialog="showDialog"
+      :confirmClick="dialogConfirm"
+      :pkValue="pkValue"
+      @updateShowDialog="dialogChangeView"
+    ></hourMsgDialog>
   </div>
 </template>
 
 <script>
 import headerBrum from "@/components/HeaderBrum" // 引入面包屑部分
+import hourMsgDialog from "./component/houseMsg" // 查看当前房间信息和执行退房操作
 import checkout from "./js/checkout"
 
 export default {
   name: "checkout",
-  components: { headerBrum },
+  components: { headerBrum, hourMsgDialog },
   mixins: [checkout],
 }
 </script>

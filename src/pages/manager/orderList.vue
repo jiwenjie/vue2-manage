@@ -88,16 +88,24 @@
         </el-pagination>
       </div>
     </div>
+    <orderDialog
+      :orderId="orderId"
+      :showDialog="showDialog"
+      :confirmClick="dialogConfirm"
+      :detail="detail"
+      @updateShowDialog="dialogShow"
+    ></orderDialog>
   </div>
 </template>
 
 <script>
 import headerBrum from "@/components/HeaderBrum" // 引入面包屑部分
+import orderDialog from "./component/orderDialog" // 引入订单详情 dialog
 import orderList from "./js/orderList"
 
 export default {
   name: "orderList",
-  components: { headerBrum },
+  components: { headerBrum, orderDialog },
   mixins: [orderList],
 }
 </script>
